@@ -78,7 +78,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
-            <version>8.4.0</version>
+            <version>8.2.0</version>
         </dependency>
 
         <dependency>
@@ -86,6 +86,14 @@
             <artifactId>solr-solrj</artifactId>
             <version>8.2.0</version>
         </dependency>
+        
+        <!-- Trying to fix "java.lang.NoClassDefFoundError: Could not initialize class org.apache.lucene.analysis.util.TokenFilterFactory"
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-analysis-extras</artifactId>
+            <version>8.2.0</version>
+        </dependency> -->
+                
         
         <dependency>
             <groupId>net.sf.saxon</groupId>
