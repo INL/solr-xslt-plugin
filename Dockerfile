@@ -12,7 +12,7 @@ RUN mvn package
 
 ## Stage 1: Solr
 #=============================
-FROM solr:8
+FROM solr:8.8
 LABEL maintainer="Jan Niestadt <jan.niestadt@ivdnt.org>"
 
 # Download and place Saxon JAR
