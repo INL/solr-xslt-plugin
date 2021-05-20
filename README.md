@@ -6,6 +6,7 @@ To enable this plugin for your core, in your `solrconfig.xml`, add this to the `
 
 ```xml
 <!-- Load the solr-apply-xslt plugin -->
+<lib dir="${solr.install.dir:/opt/solr}/dist/" regex="Saxon-*.jar" />
 <lib dir="${solr.install.dir:/opt/solr}/contrib/apply-xslt/lib/" regex="solr-apply-xslt.*\.jar" />
 ```
 

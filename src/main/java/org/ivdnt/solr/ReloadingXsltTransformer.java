@@ -8,9 +8,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
 
 public class ReloadingXsltTransformer {
-    
+
     private File xsltFile;
-    
+
     private Transformer transformer;
 
     private long xsltFileLastModified = 0;
@@ -19,9 +19,9 @@ public class ReloadingXsltTransformer {
 
     public ReloadingXsltTransformer(File xsltFile) {
         this.xsltFile = xsltFile;
-        transformerFactory = TransformerFactory.newInstance();
+        transformerFactory = new net.sf.saxon.BasicTransformerFactory();
     }
-    
+
     public synchronized Transformer get() throws TransformerConfigurationException {
         if (transformer == null || xsltFile.lastModified() > xsltFileLastModified) {
             transformer = transformerFactory.newTransformer(new StreamSource(xsltFile));
