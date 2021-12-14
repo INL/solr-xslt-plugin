@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.m2 mvn --no-transfer-progress package
 
 ## Stage 1: Solr
 #=============================
-FROM solr:8.8
+FROM solr:8
 LABEL maintainer="Jan Niestadt <jan.niestadt@ivdnt.org>"
 
 # Download and place Saxon JAR
