@@ -109,6 +109,9 @@
    -->
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
 
+   <field name="test1" type="string" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="test2" type="string" indexed="true" stored="true" required="false" multiValued="false" />
+
     <!--
    <field name="pre" type="preanalyzed" indexed="true" stored="true"/>
    <field name="sku" type="text_en_splitting_tight" indexed="true" stored="true" omitNorms="true"/>
@@ -294,9 +297,9 @@
       Numeric field types that index values using KD-trees.
       Point fields don't support FieldCache, so they must have docValues="true" if needed for sorting, faceting, functions, etc.
     <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
-    <fieldType name="pfloat" class="solr.FloatPointField" docValues="true"/>
+    <fieldType name="pfloat" class="solr.FloatPointField" docValues="true"/> -->
     <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
-    <fieldType name="pdouble" class="solr.DoublePointField" docValues="true"/>
+    <!-- <fieldType name="pdouble" class="solr.DoublePointField" docValues="true"/>
 
     <fieldType name="pints" class="solr.IntPointField" docValues="true" multiValued="true"/>
     <fieldType name="pfloats" class="solr.FloatPointField" docValues="true" multiValued="true"/>
@@ -394,19 +397,15 @@
    also applies synonyms. -->
     <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
-        <tokenizer name="standard"/>
-        <filter name="stop" ignoreCase="true" words="stopwords.txt" />
-        <!-- in this example, we will only use synonyms at query time
-        <filter name="synonymGraph" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
-        <filter name="flattenGraph"/>
-        -->
-        <filter name="lowercase"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <!-- <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" /> -->
+        <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
       <analyzer type="query">
-        <tokenizer name="standard"/>
-        <filter name="stop" ignoreCase="true" words="stopwords.txt" />
-        <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
-        <filter name="lowercase"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <!-- <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" /> -->
+        <!-- <filter name="synonymGraph" synonyms="synonyms.txt" ignoreCase="true" expand="true"/> -->
+          <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
     </fieldType>
 

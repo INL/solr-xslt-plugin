@@ -55,6 +55,7 @@
          The examples below can be used to load some solr-contribs along
          with their external dependencies.
       -->
+    <!--
     <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
     <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
 
@@ -67,9 +68,12 @@
     <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
     <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
     <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-ltr-\d.*\.jar" />
+    -->
 
     <!-- ADDED JN: load our own Solr Apply XSLT SearchComponent -->
-    <lib dir="${solr.install.dir:../../../../target/" regex="solr-apply-xslt\.jar" />
+    <!-- (not necessary while testing, class is already available -->)
+    <!--<lib dir="${solr.install.dir:../../../..}/target/" regex="solr-apply-xslt\.jar" />
+    <lib path="../../../../target/solr-apply-xslt.jar" />-->
 
     <!-- an exact 'path' can be used instead of a 'dir' to specify a
          specific jar file.  This will cause a serious error to be logged
@@ -1139,14 +1143,14 @@
     <searchComponent name="apply-xslt" class="org.ivdnt.solr.ApplyXsltComponent" >
 
         <!-- any parameters (apply what XSLT? to what response field?) go here -->
-        <str name="xsltFile">./xslt/article.xslt</str>
-        <str name="inputField">xml</str>
+        <str name="xsltFile">test.xslt</str>
+        <str name="inputField">test1</str>
 
     </searchComponent>
 
-    <!-- Use classic schema.xml -->
+    <!-- Use classic schema.xml
     <schemaFactory class="ClassicIndexSchemaFactory">
-    </schemaFactory>
+    </schemaFactory> -->
 
     <!-- ADDED JN explicitly use a mutable ManagedIndexSchemaFactory (probably the default, but oh well)
     <schemaFactory class="ManagedIndexSchemaFactory">
