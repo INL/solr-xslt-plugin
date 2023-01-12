@@ -27,7 +27,6 @@ import org.apache.solr.common.util.NamedList;
 import org.apache.solr.core.CoreContainer;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class TestEmbeddedSolr {
@@ -117,7 +116,7 @@ public class TestEmbeddedSolr {
         GenericSolrRequest reqSetLogLevel = new GenericSolrRequest(SolrRequest.METHOD.POST,
                 "/admin/info/logging", params);
         NamedList<Object> response = server.request(reqSetLogLevel);
-        System.err.println("Log level response\n" + response.toString());
+        //System.err.println("Log level response\n" + response.toString());
     }
 
     /**
@@ -157,16 +156,15 @@ public class TestEmbeddedSolr {
         }
     }
 
-    @Ignore
     @Test
     public void testStuff() throws SolrServerException, IOException {
         ModifiableSolrParams solrParams = new ModifiableSolrParams();
         solrParams.add(CommonParams.Q, "*:*");
         solrParams.add("applyXslt", "true"); // activate our xslt component
 
-        System.err.println(CORE_NAME);
+        //System.err.println(CORE_NAME);
         QueryResponse queryResponse = server.query(CORE_NAME, solrParams);
-        System.err.println("RESPONSE: " + queryResponse.getResponse());
+        //System.err.println("RESPONSE: " + queryResponse.getResponse());
         /*for (SolrDocument document: queryResponse.getResults()) {
             System.out.println(document);
         }*/
