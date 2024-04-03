@@ -22,4 +22,4 @@ RUN curl -SL https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/9.8.0-4/Saxon-
 
 # Place solr-apply-xslt plugin JAR built in previous stage
 USER solr
-COPY --from=builder /app/target/solr-apply-xslt-1.0-SNAPSHOT-jar-with-dependencies.jar /opt/solr/contrib/apply-xslt/lib/
+COPY --from=builder /app/target/solr-apply-xslt.jar /opt/solr/contrib/apply-xslt/lib/

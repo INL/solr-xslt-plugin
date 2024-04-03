@@ -99,16 +99,17 @@ public class ApplyXsltComponent extends SearchComponent implements SolrCoreAware
                     // Get the XML from the response
                     Document doc = searcher.doc(it.next());
                     String xml = doc.get(inputField); // TODO: make field configurable
-                    
-                    // Transform the XML using the XSLT
-                    Source source = new StreamSource(new StringReader(xml));
-                    StringWriter html = new StringWriter();
-                    Result result = new StreamResult(html);
-                    transformer.reset();
-                    transformer.transform(source, result);
-                    
-                    // Add to our output section in the same order as the results
-                    data.add(html.toString());
+                    if (xml != null) {
+                        // Transform the XML using the XSLT
+                        Source source = new StreamSource(new StringReader(xml));
+                        StringWriter html = new StringWriter();
+                        Result result = new StreamResult(html);
+                        transformer.reset();
+                        transformer.transform(source, result);
+
+                        // Add to our output section in the same order as the results
+                        data.add(html.toString());
+                    }
                 }
                 rb.rsp.add("apply-xslt", data);
                 
