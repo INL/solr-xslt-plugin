@@ -1,6 +1,6 @@
 ## Stage 0: Build Solr plugin
 #=============================
-FROM maven:3.6-jdk-11 AS builder
+FROM maven:3.9-eclipse-temurin-11 AS builder
 WORKDIR /app
 
 # Copy source from stage 0
@@ -12,7 +12,7 @@ RUN --mount=type=cache,target=/root/.m2 mvn --no-transfer-progress package
 
 ## Stage 1: Solr
 #=============================
-FROM solr:8
+FROM solr:8.11
 LABEL maintainer="Jan Niestadt <jan.niestadt@ivdnt.org>"
 
 # Download and place Saxon JAR
