@@ -1,7 +1,10 @@
 package org.ivdnt.solr;
 
+import static java.util.Map.entry;
+
 import java.io.IOException;
 import java.text.Normalizer;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.lucene.analysis.TokenStream;
@@ -12,32 +15,19 @@ import org.junit.Test;
 /** Test some character filters.  */
 public class TestJewishAccentsFilter {
 
-    static String stripJewishAccents2(String s) {
-
-        // Replace some characters that are not in the Unicode normalization
-        s = s.replace("כּ", "כ");
-        s = s.replace("וּ", "ו");
-        s = s.replace("יִ", "ו");
-        s = s.replace("תּ", "ת");
-
-        s = Normalizer.normalize(s, Normalizer.Form.NFKD);
-
-        // Return the string with all combining diacritical marks removed
-        return s.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-    }
+    AccentStripper stripper = new JewishAccentStripper2();
 
     void test(String expected, String input) {
-        Assert.assertEquals(input + "(using search/replace)", expected, StripJewishAccentsFilter.strip(input));
-        //Assert.assertEquals(input + "(using normalization)", expected, stripJewishAccents2(input));
+        Assert.assertEquals(input + "(using search/replace)", expected, stripper.strip(input));
     }
 
     public static void main(String[] args) throws IOException {
 
-        TokenStream tokenStream = new TokenStreamFromList(StripJewishAccentsFilter.map.keySet());
+        TokenStream tokenStream = new TokenStreamFromList(JewishAccentStripper1.map.keySet());
         StripJewishAccentsFilter filter = new StripJewishAccentsFilter(tokenStream);
         CharTermAttribute termAtt = filter.getAttribute(CharTermAttribute.class);
 
-        for (Map.Entry<String, String> entry: StripJewishAccentsFilter.map.entrySet()) {
+        for (Map.Entry<String, String> entry: JewishAccentStripper1.map.entrySet()) {
             String k = entry.getKey();
             String v = entry.getValue();
 
@@ -55,7 +45,7 @@ public class TestJewishAccentsFilter {
 
     @Test
     public void testStripJewishAccents() {
-        for (Map.Entry<String, String> entry : StripJewishAccentsFilter.map.entrySet()) {
+        for (Map.Entry<String, String> entry : JewishAccentStripper1.map.entrySet()) {
             test(entry.getValue(), entry.getKey());
         }
     }
@@ -66,5 +56,15 @@ public class TestJewishAccentsFilter {
         String expected = "אאבבווווייייייככפפששת-";
         test(expected, input);
     }
+
+    @Test
+    public void inputsNormalizeToTheSameString() {
+        String r1 = stripper.strip("האט");
+        String r2 = stripper.strip("האָט");
+        String r3 = stripper.strip("האַט");
+        Assert.assertEquals(r1, r2);
+        Assert.assertEquals(r1, r3);
+    }
+
 
 }
